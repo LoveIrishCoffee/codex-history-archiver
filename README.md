@@ -4,6 +4,8 @@ Windows 上的 Codex 本地历史会话批量归档、恢复工具。**非官方
 
 [English](README.en.md) · [更新记录](CHANGELOG.md) · [MIT 许可证](LICENSE)
 
+**[下载 Windows 预览版](https://github.com/LoveIrishCoffee/codex-history-archiver/releases/tag/v0.1.0-preview)** — 在 Assets 中选择 `CodexHistoryArchiver-0.1.0-preview-windows.zip`，解压后运行 EXE。
+
 适合需要批量整理本地历史，或在某些账户配置下遇到桌面归档失败的用户。工具使用已安装 Codex 的 `app-server` 接口，不包含 Codex 程序，不会修复桌面客户端自己的归档按钮。
 
 ## 功能

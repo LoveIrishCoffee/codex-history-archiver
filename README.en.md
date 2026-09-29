@@ -4,6 +4,8 @@ An **unofficial Windows utility** for batch archiving and restoring local Codex 
 
 [中文使用说明](README.md) · [MIT license](LICENSE)
 
+**[Download the Windows preview](https://github.com/LoveIrishCoffee/codex-history-archiver/releases/tag/v0.1.0-preview)** — choose `CodexHistoryArchiver-0.1.0-preview-windows.zip` under Assets, extract it, and run the EXE.
+
 The utility runs an already-installed `codex.exe app-server --stdio` and uses native local archive APIs. It does not bundle Codex or patch the desktop app's archive button.
 
 ## Requirements and scope
