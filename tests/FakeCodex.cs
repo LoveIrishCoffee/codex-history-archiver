@@ -11,6 +11,8 @@ namespace CodexHistoryArchive.Tests
     internal static class FakeCodex
     {
         private static readonly JavaScriptSerializer Serializer = new JavaScriptSerializer();
+        private static readonly StreamReader Input = new StreamReader(Console.OpenStandardInput(), new UTF8Encoding(false));
+        private static readonly StreamWriter Output = new StreamWriter(Console.OpenStandardOutput(), new UTF8Encoding(false)) { AutoFlush = true };
         private static string home, scenario;
         private static bool archived;
         internal const string FixtureId = "synthetic-fixture";
@@ -25,20 +27,20 @@ namespace CodexHistoryArchive.Tests
                 { "source", "cli" }, { "parentThreadId", null }, { "updatedAt", 1700000000 }
             };
         }
-        private static void Reply(object id, object result) { Console.WriteLine(Serializer.Serialize(new { id = id, result = result })); }
-        private static void Error(object id, string message) { Console.WriteLine(Serializer.Serialize(new { id = id, error = new { code = -32000, message = message } })); }
+        private static void Reply(object id, object result) { Output.WriteLine(Serializer.Serialize(new { id = id, result = result })); }
+        private static void Error(object id, string message) { Output.WriteLine(Serializer.Serialize(new { id = id, error = new { code = -32000, message = message } })); }
 
         private static int Main(string[] args)
         {
-            if (args.Length == 1 && args[0] == "--version") { Console.WriteLine("codex-cli 0.0.0-synthetic"); return 0; }
+            if (args.Length == 1 && args[0] == "--version") { Output.WriteLine("codex-cli 0.0.0-synthetic"); return 0; }
             if (args.Length != 2 || args[0] != "app-server" || args[1] != "--stdio") return 2;
             home = Environment.GetEnvironmentVariable("CODEX_HOME");
             if (String.IsNullOrEmpty(home) || !File.Exists(Path.Combine(home, ".synthetic-test-home"))) return 3;
             scenario = File.ReadAllText(Path.Combine(home, "scenario.txt")).Trim();
-            Console.InputEncoding = new UTF8Encoding(false);
-            Console.OutputEncoding = new UTF8Encoding(false);
+            // Use redirected streams directly: console code-page setters require an
+            // attached Windows console, which is absent on headless CI runners.
             string line;
-            while ((line = Console.ReadLine()) != null)
+            while ((line = Input.ReadLine()) != null)
             {
                 var request = Object(Serializer.DeserializeObject(line));
                 File.AppendAllText(Path.Combine(home, "requests.jsonl"), line + Environment.NewLine, new UTF8Encoding(false));
