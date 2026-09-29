@@ -1,0 +1,26 @@
+# Build output
+/bin/
+/obj/
+/dist/
+/packages/
+/.vs/
+*.user
+*.suo
+*.exe
+*.pdb
+*.zip
+
+# Local settings, diagnostics and conversation data must stay local.
+/.codex/
+/Logs/
+/运行记录/
+*.jsonl
+*.sqlite
+*.sqlite-*
+*.db
+.env
+.env.*
+auth.json
+config.toml
+settings.json
+
